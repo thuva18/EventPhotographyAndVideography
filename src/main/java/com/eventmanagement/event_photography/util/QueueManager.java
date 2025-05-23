@@ -8,34 +8,34 @@ public class QueueManager {
     private Booking[] bookingQueue;
     private int front;
     private int rear;
-    private int size;
-    private int capacity;
+    private int nItems;
+    private int maxSize;
 
     public QueueManager() {
-        this.capacity = 100; // Fixed capacity for circular queue
-        this.bookingQueue = new Booking[capacity];
+        this.maxSize = 100; // Fixed capacity for circular queue
+        this.bookingQueue = new Booking[maxSize];
         this.front = 0;
         this.rear = -1;
-        this.size = 0;
+        this.nItems = 0;
     }
 
     public void addBooking(Booking booking) {
-        if (isFull()) {
+        if (isFull())
             throw new IllegalStateException("Queue is full");
-        }
-        rear = (rear + 1) % capacity;
+
+        rear = (rear + 1) % maxSize;
         bookingQueue[rear] = booking;
-        size++;
+         nItems++;
     }
 
     public Booking dequeue() {
-        if (isEmpty()) {
+        if (isEmpty())
             return null;
-        }
+
         Booking booking = bookingQueue[front];
         bookingQueue[front] = null;
-        front = (front + 1) % capacity;
-        size--;
+        front = (front + 1) % maxSize;
+        nItems--;
         return booking;
     }
 
@@ -45,45 +45,45 @@ public class QueueManager {
         }
         int current = front;
         int indexToRemove = -1;
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < nItems; i++) {
             if (bookingQueue[current] != null && bookingQueue[current].getId().equals(bookingId)) {
                 indexToRemove = current;
                 break;
             }
-            current = (current + 1) % capacity;
+            current = (current + 1) % maxSize;
         }
         if (indexToRemove != -1) {
             // Shift elements to maintain circular queue
             while (indexToRemove != rear) {
-                int next = (indexToRemove + 1) % capacity;
+                int next = (indexToRemove + 1) % maxSize;
                 bookingQueue[indexToRemove] = bookingQueue[next];
                 indexToRemove = next;
             }
             bookingQueue[rear] = null;
-            rear = (rear - 1 + capacity) % capacity;
-            size--;
+            rear = (rear - 1 + maxSize) % maxSize;
+            maxSize--;
         }
     }
 
     public Booking[] getBookingQueue() {
-        Booking[] result = new Booking[size];
+        Booking[] result = new Booking[nItems];
         int current = front;
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < nItems; i++) {
             result[i] = bookingQueue[current];
-            current = (current + 1) % capacity;
+            current = (current + 1) % maxSize;
         }
         return result;
     }
 
     public boolean isEmpty() {
-        return size == 0;
+        return nItems == 0;
     }
 
     public boolean isFull() {
-        return size == capacity;
+        return nItems == maxSize;
     }
 
     public int size() {
-        return size;
+        return nItems;
     }
 }
