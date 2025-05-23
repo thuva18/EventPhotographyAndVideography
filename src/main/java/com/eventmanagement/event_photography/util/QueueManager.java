@@ -61,7 +61,7 @@ public class QueueManager {
             }
             bookingQueue[rear] = null;
             rear = (rear - 1 + maxSize) % maxSize;
-            maxSize--;
+            nItems--;
         }
     }
 
