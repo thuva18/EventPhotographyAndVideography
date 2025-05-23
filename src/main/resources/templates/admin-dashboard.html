@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Event Photography</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/custom.css}">
+</head>
+<body class="admin-dashboard">
+<!-- Header -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" onclick="toggleSidebar()" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand" href="/">Event Photography</a>
+    </div>
+</nav>
+
+<!-- Sidebar -->
+<div class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+        <a class="navbar-brand text-white" href="/">Event Photography</a>
+    </div>
+    <ul class="nav flex-column">
+        <li class="nav-item">
+            <a class="nav-link active" href="/admin/dashboard"><i class="fas fa-tachometer-alt me-2"></i> Dashboard</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/admin/events"><i class="fas fa-calendar-alt me-2"></i> Events</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/admin/queue"><i class="fas fa-list me-2"></i> Booking Queue</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/"><i class="fas fa-sign-out-alt me-2"></i> Logout</a>
+        </li>
+    </ul>
+</div>
+
+<!-- Main Content -->
+<div class="main-content">
+    <div class="container-fluid mt-4">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Admin Dashboard</li>
+            </ol>
+        </nav>
+        <h2>Admin Dashboard</h2>
+
+        <!-- Users Section -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h3 class="mb-0"><i class="fas fa-users me-2"></i> Users</h3>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="user : ${users}">
+                            <td th:text="${user.id != null} ? ${user.id} : 'N/A'"></td>
+                            <td th:text="${user.name != null} ? ${user.name} : 'N/A'"></td>
+                            <td th:text="${user.username != null} ? ${user.username} : 'N/A'"></td>
+                            <td th:text="${user.email != null} ? ${user.email} : 'N/A'"></td>
+                            <td th:text="${user.role != null} ? ${user.role} : 'N/A'"></td>
+                            <td>
+                                <a th:href="@{/users/profile/{id}(id=${user.id})}" class="btn btn-info btn-sm me-1"><i class="fas fa-eye"></i> View</a>
+                                <a th:href="@{/users/profile/{id}(id=${user.id})}" class="btn btn-warning btn-sm me-1"><i class="fas fa-edit"></i> Edit</a>
+                                <form th:action="@{/users/delete/{id}(id=${user.id})}" method="post" style="display:inline;">
+                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this user?')"><i class="fas fa-trash"></i> Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                        <tr th:if="${#lists.isEmpty(users)}">
+                            <td colspan="6" class="text-center">No users available.</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Events Section -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h3 class="mb-0"><i class="fas fa-calendar-alt me-2"></i> Events</h3>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Date & Time</th>
+                            <th>Location</th>
+                            <th>Service Type</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="event : ${events}">
+                            <td th:text="${event.id != null} ? ${event.id} : 'N/A'"></td>
+                            <td th:text="${event.name != null} ? ${event.name} : 'N/A'"></td>
+                            <td th:text="${event.dateTime != null} ? ${event.dateTime} : 'N/A'"></td>
+                            <td th:text="${event.location != null} ? ${event.location} : 'N/A'"></td>
+                            <td th:text="${event.serviceType != null} ? ${event.serviceType} : 'N/A'"></td>
+                            <td>
+                                <a th:href="@{/events/edit/{id}(id=${event.id})}" class="btn btn-warning btn-sm me-1"><i class="fas fa-edit"></i> Edit</a>
+                                <form th:action="@{/events/delete/{id}(id=${event.id})}" method="post" style="display:inline;">
+                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this event?')"><i class="fas fa-trash"></i> Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                        <tr th:if="${#lists.isEmpty(events)}">
+                            <td colspan="6" class="text-center">No events available.</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bookings Section -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h3 class="mb-0"><i class="fas fa-book me-2"></i> Bookings</h3>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>User ID</th>
+                            <th>Photographer ID</th>
+                            <th>Videographer ID</th>
+                            <th>Event ID</th>
+                            <th>Service Type</th>
+                            <th>Booking Date</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="booking : ${bookings}">
+                            <td th:text="${booking.id != null} ? ${booking.id} : 'N/A'"></td>
+                            <td th:text="${booking.userId != null} ? ${booking.userId} : 'N/A'"></td>
+                            <td th:text="${booking.photographerId != null} ? ${booking.photographerId} : 'N/A'"></td>
+                            <td th:text="${booking.videographerId != null} ? ${booking.videographerId} : 'N/A'"></td>
+                            <td th:text="${booking.eventId != null} ? ${booking.eventId} : 'N/A'"></td>
+                            <td th:text="${booking.serviceType != null} ? ${booking.serviceType} : 'N/A'"></td>
+                            <td th:text="${booking.bookingDate != null} ? ${booking.bookingDate} : 'N/A'"></td>
+                            <td>
+                                <a th:href="@{/bookings/edit/{id}(id=${booking.id})}" class="btn btn-warning btn-sm me-1"><i class="fas fa-edit"></i> Edit</a>
+                                <form th:action="@{/bookings/delete/{id}(id=${booking.id})}" method="post" style="display:inline;">
+                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this booking?')"><i class="fas fa-trash"></i> Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                        <tr th:if="${#lists.isEmpty(bookings)}">
+                            <td colspan="8" class="text-center">No bookings available.</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Photographers Section -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h3 class="mb-0"><i class="fas fa-camera me-2"></i> Photographers</h3>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Specialty</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="photographer : ${photographers}">
+                            <td th:text="${photographer.id != null} ? ${photographer.id} : 'N/A'"></td>
+                            <td th:text="${photographer.name != null} ? ${photographer.name} : 'N/A'"></td>
+                            <td th:text="${photographer.email != null} ? ${photographer.email} : 'N/A'"></td>
+                            <td th:text="${photographer.specialty != null} ? ${photographer.specialty} : 'N/A'"></td>
+                            <td>
+                                <a th:href="@{/photographers/edit/{id}(id=${photographer.id})}" class="btn btn-warning btn-sm me-1"><i class="fas fa-edit"></i> Edit</a>
+                                <form th:action="@{/photographers/delete/{id}(id=${photographer.id})}" method="post" style="display:inline;">
+                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this photographer?')"><i class="fas fa-trash"></i> Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                        <tr th:if="${#lists.isEmpty(photographers)}">
+                            <td colspan="5" class="text-center">No photographers available.</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <h4 class="mt-4">Add New Photographer</h4>
+                <form th:action="@{/admin/addPhotographer}" th:object="${newPhotographer}" method="post" class="mt-3">
+                    <div class="row g-3">
+                        <div class="col-md-3">
+                            <input type="number" th:field="*{id}" class="form-control" placeholder="ID" required>
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" th:field="*{name}" class="form-control" placeholder="Name" required>
+                        </div>
+                        <div class="col-md-3">
+                            <input type="email" th:field="*{email}" class="form-control" placeholder="Email" required>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="text" th:field="*{specialty}" class="form-control" placeholder="Specialty" required>
+                        </div>
+                        <div class="col-md-1">
+                            <button type="submit" class="btn btn-primary"><i class="fas fa-plus me-1"></i> Add</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Videographers Section -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h3 class="mb-0"><i class="fas fa-video me-2"></i> Videographers</h3>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="videographer : ${videographers}">
+                            <td th:text="${videographer.id != null} ? ${videographer.id} : 'N/A'"></td>
+                            <td th:text="${videographer.name != null} ? ${videographer.name} : 'N/A'"></td>
+                            <td th:text="${videographer.email != null} ? ${videographer.email} : 'N/A'"></td>
+                            <td>
+                                <a th:href="@{/videographers/edit/{id}(id=${videographer.id})}" class="btn btn-warning btn-sm me-1"><i class="fas fa-edit"></i> Edit</a>
+                                <form th:action="@{/videographers/delete/{id}(id=${videographer.id})}" method="post" style="display:inline;">
+                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this videographer?')"><i class="fas fa-trash"></i> Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                        <tr th:if="${#lists.isEmpty(videographers)}">
+                            <td colspan="4" class="text-center">No videographers available.</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <h4 class="mt-4">Add New Videographer</h4>
+                <form th:action="@{/admin/addVideographer}" th:object="${newVideographer}" method="post" class="mt-3">
+                    <div class="row g-3">
+                        <div class="col-md-3">
+                            <input type="number" th:field="*{id}" class="form-control" placeholder="ID" required>
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" th:field="*{name}" class="form-control" placeholder="Name" required>
+                        </div>
+                        <div class="col-md-3">
+                            <input type="email" th:field="*{email}" class="form-control" placeholder="Email" required>
+                        </div>
+                        <div class="col-md-3">
+                            <button type="submit" class="btn btn-primary"><i class="fas fa-plus me-1"></i> Add</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container-fluid text-center">
+            <p>© 2025 Event Photography. All rights reserved. | <a href="/">Home</a></p>
+        </div>
+    </footer>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script th:src="@{/js/custom.js}"></script>
+</body>
+</html>

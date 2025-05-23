@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Event Photography & Videography - Capture Your Moments</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet"/>
+
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+    <!-- AOS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet"/>
+
+    <style>
+        :root {
+            --primary-color: #1a3c34;
+            --secondary-color: #d4af37;
+            --text-color: #333;
+            --light-bg: #f5f5f5;
+            --white: #fff;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-color);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary-color);
+        }
+
+        .navbar {
+            background-color: var(--primary-color);
+            padding: 1rem 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .navbar-brand, .nav-link {
+            color: var(--white) !important;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--secondary-color) !important;
+        }
+
+        .hero-section {
+            height: 100vh;
+            background: url('https://images.unsplash.com/photo-1519741497674-611481863552?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8));
+        }
+
+        .hero-content {
+            z-index: 2;
+            text-align: center;
+        }
+
+        .hero-content h1 {
+            font-size: 4.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: #b76e79; /* Changed to rose gold */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-content p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .btn-primary {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+            font-weight: 600;
+            padding: 0.75rem 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #b8972f;
+            border-color: #b8972f;
+            transform: scale(1.05);
+        }
+
+        .services-section,
+        .team-section,
+        .testimonials-section,
+        .contact-section {
+            padding: 100px 0;
+        }
+
+        .services-section {
+            background-color: var(--light-bg);
+        }
+
+        .service-card {
+            border: none;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        .service-card img {
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .team-card {
+            border: none;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .team-card img {
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .team-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .testimonial-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .contact-section {
+            background-color: var(--primary-color);
+            color: var(--white);
+        }
+
+        .contact-section h2 {
+            color: var(--white);
+        }
+
+        .form-control {
+            border-radius: 8px;
+            padding: 0.75rem;
+        }
+
+        footer {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 50px 0;
+        }
+
+        footer a {
+            color: var(--secondary-color);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: var(--secondary-color);
+            color: var(--white);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+        }
+
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-content p {
+                font-size: 1rem;
+            }
+
+            .navbar-nav {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+    <div class="container">
+        <a class="navbar-brand" href="/"><i class="fas fa-camera-retro me-2"></i>Event Photography</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="mainNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="servicesDropdown" role="button" data-bs-toggle="dropdown">
+                        Services
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="servicesDropdown">
+                        <li><a class="dropdown-item" href="#wedding">Wedding Photography</a></li>
+                        <li><a class="dropdown-item" href="#event">Event Videography</a></li>
+                        <li><a class="dropdown-item" href="#corporate">Corporate Events</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item"><a class="nav-link" href="/users/register">Register</a></li>
+                <li class="nav-item"><a class="nav-link" href="/users/login">Login</a></li>
+                <li class="nav-item"><a class="nav-link" href="/admin/login">Admin Login</a></li>
+                <li class="nav-item"><a class="nav-link btn btn-primary ms-2" href="/events/book">Book Now</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="hero-content" data-aos="fade-up">
+        <h1 class="animate__animated animate__fadeInDown">Capture Your Timeless Moments</h1>
+        <p class="lead animate__animated animate__fadeInUp">Premium Photography & Videography for Every Occasion</p>
+        <a href="/events/book" class="btn btn-primary mt-3 animate__animated animate__fadeInUp">Book Your Event Now</a>
+    </div>
+</section>
+
+<!-- Services Section -->
+<section class="services-section" id="services">
+    <div class="container">
+        <h2 class="text-center mb-5" data-aos="fade-up">Our Services</h2>
+        <div class="row">
+            <div class="col-md-4 mb-4" data-aos="zoom-in" id="wedding">
+                <div class="card service-card h-100">
+                    <img loading="lazy" src="https://images.pexels.com/photos/111287/pexels-photo-111287.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" class="card-img-top" alt="Wedding Photography">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Wedding Photography</h5>
+                        <p class="card-text">Immortalize your special day with stunning, heartfelt photos.</p>
+                        <a href="/events/book" class="btn btn-primary">Book Now</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4" data-aos="zoom-in" data-aos-delay="100" id="event">
+                <div class="card service-card h-100">
+                    <img loading="lazy" src="https://images.pexels.com/photos/225227/pexels-photo-225227.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" class="card-img-top" alt="Event Videography">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Event Videography</h5>
+                        <p class="card-text">Relive every moment with cinematic-quality videos.</p>
+                        <a href="/events/book" class="btn btn-primary">Book Now</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4" data-aos="zoom-in" data-aos-delay="200" id="corporate">
+                <div class="card service-card h-100">
+                    <img loading="lazy" src="https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" class="card-img-top" alt="Corporate Events">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Corporate Events</h5>
+                        <p class="card-text">Professional coverage for conferences and corporate events.</p>
+                        <a href="/events/book" class="btn btn-primary">Book Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Team Section -->
+<section class="team-section">
+    <div class="container">
+        <h2 class="text-center mb-5" data-aos="fade-up">Meet Our Team</h2>
+        <div class="row">
+            <div class="col-md-4 mb-4" data-aos="fade-up">
+                <div class="card team-card">
+                    <img loading="lazy" src="https://images.unsplash.com/photo-1524502397800-2eeaad7c3fe5?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" class="card-img-top" alt="Team Member">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Emily Carter</h5>
+                        <p class="card-text">Lead Photographer</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="card team-card">
+                    <img loading="lazy" src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" class="card-img-top" alt="Team Member">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Michael Brown</h5>
+                        <p class="card-text">Lead Videographer</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="card team-card">
+                    <img loading="lazy" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" class="card-img-top" alt="Team Member">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Sarah Evans</h5>
+                        <p class="card-text">Creative Director</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="testimonials-section bg-light">
+    <div class="container">
+        <h2 class="text-center mb-5" data-aos="fade-up">What Our Clients Say</h2>
+        <div class="row">
+            <div class="col-md-4 mb-4" data-aos="fade-right">
+                <div class="card testimonial-card">
+                    <p class="fst-italic">"The team captured our wedding beautifully! Every moment was preserved perfectly."</p>
+                    <small class="text-muted">– Jane & Mark</small>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4" data-aos="fade-up">
+                <div class="card testimonial-card">
+                    <p class="fst-italic">"Their videography for our conference was top-notch. Highly professional!"</p>
+                    <small class="text-muted">– John Smith, CEO</small>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4" data-aos="fade-left">
+                <div class="card testimonial-card">
+                    <p class="fst-italic">"The family reunion album they created is a treasure. Amazing work!"</p>
+                    <small class="text-muted">– Sarah Wilson</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section class="contact-section" id="contact">
+    <div class="container">
+        <h2 class="text-center mb-5" data-aos="fade-up">Get in Touch</h2>
+        <div class="row justify-content-center">
+            <div class="col-md-6" data-aos="fade-up">
+                <form id="contactForm" method="post" novalidate>
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="name" name="name" required>
+                        <div class="invalid-feedback">Please enter your name.</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" name="email" required>
+                        <div class="invalid-feedback">Please enter a valid email address.</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="message" class="form-label">Message</label>
+                        <textarea class="form-control" id="message" name="message" rows="5" required></textarea>
+                        <div class="invalid-feedback">Please enter your message.</div>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100" id="submitBtn">Send Message</button>
+                    <div class="text-center mt-3 d-none" id="loadingSpinner">
+                        <div class="spinner-border text-light" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="text-center">
+    <div class="container">
+        <p>© 2025 Event Photography & Videography. All rights reserved.</p>
+        <p>
+            <a href="#">Privacy Policy</a> |
+            <a href="#">Terms of Service</a> |
+            <a href="#contact">Contact Us</a>
+        </p>
+        <div class="social-icons mt-3">
+            <a href="#" class="me-3"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="me-3"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="me-3"><i class="fab fa-twitter"></i></a>
+        </div>
+    </div>
+</footer>
+
+<!-- Back to Top Button -->
+<a href="#" class="back-to-top" id="backToTop"><i class="fas fa-chevron-up"></i></a>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+    AOS.init({ duration: 1000 });
+
+    // Back to Top Button
+    const backToTop = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) {
+            backToTop.classList.add('visible');
+        } else {
+            backToTop.classList.remove('visible');
+        }
+    });
+
+    // Contact Form Validation
+    const form = document.getElementById('contactForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const loadingSpinner = document.getElementById('loadingSpinner');
+
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        if (!form.checkValidity()) {
+            e.stopPropagation();
+            form.classList.add('was-validated');
+            return;
+        }
+
+        submitBtn.disabled = true;
+        loadingSpinner.classList.remove('d-none');
+
+        setTimeout(() => {
+            alert('Message sent successfully!');
+            form.reset();
+            form.classList.remove('was-validated');
+            submitBtn.disabled = false;
+            loadingSpinner.classList.add('d-none');
+        }, 2000);
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Photographer List</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/custom.css}">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" onclick="toggleSidebar()" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand" href="/">Event Photography</a>
+    </div>
+</nav>
+
+<div class="sidebar" id="sidebar">
+    <ul class="nav flex-column">
+        <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="/users">Users</a></li>
+        <li class="nav-item"><a class="nav-link active" href="/photographers">Photographers</a></li>
+        <li class="nav-item"><a class="nav-link" href="/events">Events</a></li>
+        <li class="nav-item"><a class="nav-link" href="/feedback">Feedback</a></li>
+    </ul>
+</div>
+
+<div class="content">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Photographers</li>
+        </ol>
+    </nav>
+    <div class="container mt-4">
+        <h2 class="mb-4">Photographers (Sorted by Rating)</h2>
+        <div class="mb-3">
+            <a href="/photographers/add" class="btn btn-primary">Add Photographer</a>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered table-hover">
+                <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Specialty</th>
+                    <th>Rating</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="photographer : ${photographers}">
+                    <td th:text="${photographer.id}"></td>
+                    <td th:text="${photographer.name}"></td>
+                    <td th:text="${photographer.email}"></td>
+                    <td th:text="${photographer.specialty}"></td>
+                    <td th:text="${photographer.rating}"></td>
+                    <td>
+                        <a th:href="@{/photographers/edit/{id}(id=${photographer.id})}" class="btn btn-sm btn-warning">Edit</a>
+                        <form th:action="@{/photographers/delete/{id}(id=${photographer.id})}" method="post" style="display:inline;">
+                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this photographer?')">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(photographers)}">
+                    <td colspan="6" class="text-center">No photographers available.</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <div class="container">
+        <p>© 2025 Event Photography. All rights reserved. | <a href="/">Home</a></p>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script th:src="@{/js/custom.js}"></script>
+</body>
+</html>

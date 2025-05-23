@@ -1,0 +1,11 @@
+1,admin,admin,Admin,admin1@event.com
+2,customer1,cust1,Customer,customer1@event.com
+3,customer2,cust456,Customer,customer2@event.com
+4,customer3,cust789,Customer,customer3@event.com
+5,customer4,cust101,Customer,customer4@event.com
+6,customer5,cust202,Customer,customer5@event.com
+7,customer6,cust303,Customer,customer6@event.com
+8,customer7,cust404,Customer,customer7@event.com
+9,customer8,cust505,Customer,customer8@event.com
+10,customer10,cust707,Customer,customer10@event.com
+11,thuva,thuva2004,Customer,thuvaraganbaskaran18@gmail.com
